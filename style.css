@@ -1,0 +1,299 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #4a90e2, #50e3c2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand, .nav-link {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.navbar-brand i {
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-title a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Forms */
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+  border-color: #4a90e2;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #357abd;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.floating-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Empty State */
+.empty-state {
+  padding: 3rem 0;
+}
+
+.empty-state i {
+  opacity: 0.7;
+}
+
+/* Enhanced Cards */
+.card:hover .card-title a {
+  color: #4a90e2;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 50vh;
+  }
+  
+  .hero-section .display-4 {
+    font-size: 2.5rem;
+  }
+  
+  .floating-elements {
+    display: none;
+  }
+}
+
+/* Gradient Background */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #4a90e2, #50e3c2);
+}
+
+/* Pitch Detail Page */
+.card-header.bg-gradient-primary {
+  border-bottom: none;
+}
+
+.content-text {
+  white-space: pre-wrap;
+}
+
+.share-buttons .btn {
+  transition: all 0.3s ease;
+}
+
+.share-buttons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Enhancements */
+footer a:hover {
+  color: #50e3c2 !important;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+/* Enhanced Search Bar */
+.navbar .form-control {
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.navbar .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar .form-control:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* Loading Animation */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.loading {
+  animation: pulse 1.5s infinite;
+}
+
+/* Improved Button Hover Effects */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced Card Shadows */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Features Section */
+.feature-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.stat-card h3 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Card Images */
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Features Section Background */
+.features-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.features-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="features-bg" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%234a90e2" opacity="0.03"/></pattern></defs><rect width="100%" height="100%" fill="url(%23features-bg)"/></svg>');
+  pointer-events: none;
+}
+
+/* Category Cards */
+.category-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card i {
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover i {
+  transform: scale(1.1);
+}
+
+.category-card h5 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.category-card p {
+  color: #666;
+  margin-bottom: 0;
+}
+
+/* Categories Section Background */
+.categories-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
