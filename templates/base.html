@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IdeaBridge</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('index') }}"><i class='bx bxs-bulb'></i> IdeaBridge</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          {% if session.get('user_id') %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+            {% if session.get('role') == 'admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin') }}">Admin</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('post') }}">Post Idea</a>
+            </li>
+          {% endif %}
+        </ul>
+        <form class="d-flex me-3" action="{{ url_for('index') }}" method="get">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search ideas..." aria-label="Search" value="{{ request.args.get('q', '') }}">
+          <button class="btn btn-outline-light" type="submit"><i class='bx bx-search'></i></button>
+        </form>
+        <ul class="navbar-nav">
+          {% if not session.get('user_id') %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout ({{ session.get('username') }})</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="bg-dark text-light py-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h5><i class='bx bxs-bulb'></i> IdeaBridge</h5>
+          <p class="mb-3">Connecting innovators and investors: a platform for sharing groundbreaking startup ideas and finding the right partners to bring them to life.</p>
+          <div class="social-icons">
+            <a href="#" class="text-light me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Follow us on Twitter"><i class='bx bxl-twitter' style="font-size: 1.5rem;"></i></a>
+            <a href="#" class="text-light me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Connect on LinkedIn"><i class='bx bxl-linkedin' style="font-size: 1.5rem;"></i></a>
+            <a href="#" class="text-light me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="View our GitHub"><i class='bx bxl-github' style="font-size: 1.5rem;"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6>Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="{{ url_for('index') }}" class="text-light text-decoration-none">Home</a></li>
+            {% if session.get('user_id') %}
+            <li><a href="{{ url_for('dashboard') }}" class="text-light text-decoration-none">Dashboard</a></li>
+            <li><a href="{{ url_for('post') }}" class="text-light text-decoration-none">Post Idea</a></li>
+            {% else %}
+            <li><a href="{{ url_for('login') }}" class="text-light text-decoration-none">Login</a></li>
+            <li><a href="{{ url_for('register') }}" class="text-light text-decoration-none">Register</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6>Community</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-light text-decoration-none">Guidelines</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <h6>Stay Updated</h6>
+          <p>Subscribe to get the latest startup ideas and community updates.</p>
+          <form class="d-flex">
+            <input type="email" class="form-control me-2" placeholder="Enter email">
+            <button class="btn btn-primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-0">&copy; 2025 IdeaBridge. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <small class="text-muted">Built for demo — change and secure before production.</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Add loading class to body initially
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.remove('loading');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

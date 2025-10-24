@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+.dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+  opacity: 0.1;
+}
+.stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 12px;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.pitch-card {
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 12px;
+}
+.pitch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.btn-professional {
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-professional:hover {
+  transform: scale(1.05);
+}
+</style>
+
+<div class="dashboard-header text-white py-5 mb-5 position-relative">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInUp"><i class='bx bx-dashboard me-3'></i>Welcome back, {{ user['username'] }}!</h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Track your pitches, connect with investors, and turn your ideas into reality.</p>
+        <a href="{{ url_for('post') }}" class="btn btn-light btn-lg btn-professional animate__animated animate__fadeInUp animate__delay-2s"><i class='bx bx-plus-circle me-2'></i>Create New Pitch</a>
+      </div>
+      <div class="col-lg-4 d-none d-lg-block text-center">
+        <i class='bx bx-trending-up bx-lg animate__animated animate__bounceIn animate__delay-3s' style="font-size: 8rem; opacity: 0.8;"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <!-- Stats Row -->
+  <div class="row mb-5">
+    <div class="col-md-3 mb-4">
+      <div class="card stat-card bg-gradient-primary text-white h-100">
+        <div class="card-body text-center">
+          <i class='bx bx-bulb bx-lg mb-3' style="font-size: 3rem;"></i>
+          <h2 class="card-title mb-2">{{ pitches|length }}</h2>
+          <p class="card-text mb-0">Active Pitches</p>
+          <small class="opacity-75">Ideas shared</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card stat-card bg-gradient-success text-white h-100">
+        <div class="card-body text-center">
+          <i class='bx bx-show bx-lg mb-3' style="font-size: 3rem;"></i>
+          <h2 class="card-title mb-2">{{ pitches|length * 42 }}</h2>
+          <p class="card-text mb-0">Total Views</p>
+          <small class="opacity-75">Estimated</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card stat-card bg-gradient-warning text-white h-100">
+        <div class="card-body text-center">
+          <i class='bx bx-heart bx-lg mb-3' style="font-size: 3rem;"></i>
+          <h2 class="card-title mb-2">{{ pitches|length * 7 }}</h2>
+          <p class="card-text mb-0">Engagements</p>
+          <small class="opacity-75">Likes & comments</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4">
+      <div class="card stat-card bg-gradient-info text-white h-100">
+        <div class="card-body text-center">
+          <i class='bx bx-network-chart bx-lg mb-3' style="font-size: 3rem;"></i>
+          <h2 class="card-title mb-2">{{ pitches|length * 3 }}</h2>
+          <p class="card-text mb-0">Connections</p>
+          <small class="opacity-75">Potential investors</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="row">
+    <div class="col-lg-8 mb-5">
+      <!-- Pitches Section -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0 text-dark"><i class='bx bx-list-ul me-2 text-primary'></i>Your Pitches</h4>
+            <a href="{{ url_for('post') }}" class="btn btn-outline-primary btn-professional"><i class='bx bx-plus'></i> New Pitch</a>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if pitches %}
+          <div class="row">
+            {% for p in pitches %}
+            <div class="col-md-6 mb-4">
+              <div class="card pitch-card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-start mb-3">
+                    <i class='bx bx-bulb text-warning me-3' style="font-size: 1.5rem; margin-top: 2px;"></i>
+                    <div class="flex-grow-1">
+                      <h6 class="card-title mb-2">{{ p['title'] }}</h6>
+                      <p class="card-text text-muted small mb-3">{{ p['summary'][:120] }}...</p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <i class='bx bx-calendar text-muted me-1'></i>
+                      <small class="text-muted">{{ p['created_at'][:10] }}</small>
+                    </div>
+                    <a href="{{ url_for('pitch', pitch_id=p['id']) }}" class="btn btn-sm btn-primary btn-professional">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-center py-5">
+            <i class='bx bx-bulb bx-lg text-muted mb-4' style="font-size: 5rem;"></i>
+            <h5 class="text-muted mb-3">No pitches yet</h5>
+            <p class="text-muted mb-4">Start by creating your first pitch to attract investors and collaborators.</p>
+            <a href="{{ url_for('post') }}" class="btn btn-primary btn-lg btn-professional"><i class='bx bx-plus-circle me-2'></i>Get Started</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mb-5">
+      <!-- Profile & Quick Actions -->
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="mb-0 text-dark"><i class='bx bx-user me-2 text-primary'></i>Profile Overview</h5>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+              <i class='bx bx-user bx-lg text-white' style="font-size: 2rem;"></i>
+            </div>
+            <h6 class="mt-3 mb-1">{{ user['username'] }}</h6>
+            <p class="text-muted small mb-0">{{ user['role'].capitalize() }} Member</p>
+            <p class="text-muted small">Joined {{ user['created_at'][:10] }}</p>
+          </div>
+          <div class="d-grid gap-2">
+            <a href="{{ url_for('post') }}" class="btn btn-outline-primary btn-professional"><i class='bx bx-plus me-2'></i>New Pitch</a>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-professional"><i class='bx bx-search me-2'></i>Browse Ideas</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="mb-0 text-dark"><i class='bx bx-time me-2 text-primary'></i>Recent Activity</h5>
+        </div>
+        <div class="card-body">
+          {% if pitches %}
+          <div class="list-group list-group-flush">
+            {% for p in pitches[:3] %}
+            <div class="list-group-item border-0 px-0 py-3">
+              <div class="d-flex align-items-center">
+                <i class='bx bx-bulb text-success me-3'></i>
+                <div class="flex-grow-1">
+                  <p class="mb-0 small fw-semibold">Created pitch: {{ p['title'][:30] }}...</p>
+                  <small class="text-muted">{{ p['created_at'][:10] }}</small>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="text-muted small text-center mb-0">No recent activity. Create your first pitch to get started!</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.bg-gradient-primary { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); }
+.bg-gradient-success { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); }
+.bg-gradient-warning { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); }
+.bg-gradient-info { background: linear-gradient(135deg, #36b9cc 0%, #258391 100%); }
+</style>
+{% endblock %}

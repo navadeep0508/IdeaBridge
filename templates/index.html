@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); background-size: cover; background-position: center; height: 70vh;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold animate__animated animate__fadeInUp">Bridge Ideas to Investment</h1>
+        <p class="lead animate__animated animate__fadeInUp animate__delay-1s">Connecting innovators and investors: share your startup ideas and find the perfect partners to bring them to market.</p>
+        <div class="mt-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <a href="#pitches" class="btn btn-primary btn-lg me-3"><i class='bx bx-rocket'></i> Explore Ideas</a>
+          {% if session.get('user_id') %}
+            <a href="{{ url_for('post') }}" class="btn btn-outline-light btn-lg"><i class='bx bx-plus'></i> Share Your Idea</a>
+          {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-lg"><i class='bx bx-user-plus'></i> Join Now</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="floating-elements">
+          <div class="floating-icon animate__animated animate__bounceIn animate__delay-3s" style="position: absolute; top: 20%; right: 20%;"><i class='bx bxs-bulb' style="font-size: 3rem; color: #50e3c2;"></i></div>
+          <div class="floating-icon animate__animated animate__bounceIn animate__delay-4s" style="position: absolute; bottom: 20%; right: 10%;"><i class='bx bxs-rocket' style="font-size: 2.5rem; color: #4a90e2;"></i></div>
+          <div class="floating-icon animate__animated animate__bounceIn animate__delay-5s" style="position: absolute; top: 50%; right: 30%;"><i class='bx bxs-flame' style="font-size: 2rem; color: #ff6b6b;"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="animate__animated animate__fadeIn">Why Choose IdeaBridge?</h2>
+        <p class="lead animate__animated animate__fadeIn animate__delay-1s">Join thousands of entrepreneurs sharing and discovering game-changing ideas</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 animate__animated animate__fadeInUp">
+          <i class='bx bx-bulb' style="font-size: 3rem; color: #4a90e2;"></i>
+          <h4 class="mt-3">Innovative Ideas</h4>
+          <p>Discover cutting-edge startup concepts from visionary entrepreneurs worldwide</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 animate__animated animate__fadeInUp animate__delay-1s">
+          <i class='bx bx-group' style="font-size: 3rem; color: #50e3c2;"></i>
+          <h4 class="mt-3">Community Driven</h4>
+          <p>Connect with like-minded innovators and build your network</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <i class='bx bx-trending-up' style="font-size: 3rem; color: #ff6b6b;"></i>
+          <h4 class="mt-3">Market Insights</h4>
+          <p>Get valuable feedback and insights to refine your business ideas</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="row text-center mt-5">
+      <div class="col-md-3 mb-3">
+        <div class="stat-card bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp">
+          <h3 class="text-primary">500+</h3>
+          <p class="mb-0">Startup Ideas</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stat-card bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+          <h3 class="text-primary">200+</h3>
+          <p class="mb-0">Active Users</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stat-card bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp animate__delay-2s">
+          <h3 class="text-primary">50+</h3>
+          <p class="mb-0">Successful Launches</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stat-card bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp animate__delay-3s">
+          <h3 class="text-primary">24/7</h3>
+          <p class="mb-0">Community Support</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section py-5">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="animate__animated animate__fadeIn">Explore by Category</h2>
+        <p class="lead animate__animated animate__fadeIn animate__delay-1s">Find inspiration in different areas of innovation</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp">
+          <i class='bx bx-mobile' style="font-size: 2.5rem; color: #4a90e2;"></i>
+          <h5 class="mt-3">Tech & AI</h5>
+          <p class="small">Cutting-edge technology solutions</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-1s">
+          <i class='bx bx-shopping-bag' style="font-size: 2.5rem; color: #50e3c2;"></i>
+          <h5 class="mt-3">E-commerce</h5>
+          <p class="small">Retail and online business ideas</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <i class='bx bx-health' style="font-size: 2.5rem; color: #ff6b6b;"></i>
+          <h5 class="mt-3">Health & Wellness</h5>
+          <p class="small">Healthcare and fitness innovations</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-3s">
+          <i class='bx bx-leaf' style="font-size: 2.5rem; color: #f39c12;"></i>
+          <h5 class="mt-3">Sustainability</h5>
+          <p class="small">Green and eco-friendly solutions</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-4s">
+          <i class='bx bx-game' style="font-size: 2.5rem; color: #9b59b6;"></i>
+          <h5 class="mt-3">Gaming</h5>
+          <p class="small">Entertainment and gaming platforms</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-5s">
+          <i class='bx bx-money' style="font-size: 2.5rem; color: #e74c3c;"></i>
+          <h5 class="mt-3">FinTech</h5>
+          <p class="small">Financial technology innovations</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-6s">
+          <i class='bx bx-book' style="font-size: 2.5rem; color: #1abc9c;"></i>
+          <h5 class="mt-3">Education</h5>
+          <p class="small">Learning and educational platforms</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="category-card text-center p-4 animate__animated animate__fadeInUp animate__delay-7s">
+          <i class='bx bx-car' style="font-size: 2.5rem; color: #34495e;"></i>
+          <h5 class="mt-3">Transportation</h5>
+          <p class="small">Mobility and logistics solutions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pitches" class="py-5">
+  <div class="container">
+    <h2 class="mb-4 text-center animate__animated animate__fadeIn">
+      {% if search_query %}
+        Search Results for "{{ search_query }}"
+      {% else %}
+        Latest Startup Ideas
+      {% endif %}
+    </h2>
+    
+    {% if search_query and pitches %}
+      <p class="text-center text-muted mb-4">{{ pitches|length }} result{{ 's' if pitches|length != 1 else '' }} found</p>
+    {% endif %}
+
+    <div class="row">
+      {% for p in pitches %}
+      <div class="col-md-6 col-lg-4 mb-4 animate__animated animate__fadeInUp">
+        <div class="card h-100">
+          {% set random_seed = p['id'] | string %}
+          <img src="https://picsum.photos/seed/{{ random_seed }}/400/250?random={{ random_seed }}" class="card-img-top" alt="Startup idea image" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title"><a href="{{ url_for('pitch', pitch_id=p['id']) }}">{{ p['title'] }}</a></h5>
+            <h6 class="card-subtitle mb-2 text-muted">By {{ p['username'] }} — {{ p['created_at'][:19] if p['created_at'] }}</h6>
+            <p class="card-text">{{ p['summary'] or (p['content'][:200] + '...') }}</p>
+            <a href="{{ url_for('pitch', pitch_id=p['id']) }}" class="btn btn-primary">Read full pitch</a>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col text-center">
+        <div class="empty-state animate__animated animate__fadeIn">
+          <i class='bx bx-idea' style="font-size: 4rem; color: #ccc;"></i>
+          <h3 class="mt-3">No ideas yet</h3>
+          <p>Be the first to share your innovative startup idea!</p>
+          {% if session.get('user_id') %}
+            <a href="{{ url_for('post') }}" class="btn btn-primary">Post Your Idea</a>
+          {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary">Sign Up to Start</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

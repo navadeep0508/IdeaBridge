@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Post a Startup Idea</h2>
+<form method="post">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" id="title" name="title" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="summary" class="form-label">Summary (short)</label>
+    <input type="text" id="summary" name="summary" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Full Pitch</label>
+    <textarea id="content" name="content" class="form-control" rows="12" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Publish Pitch</button>
+</form>
+{% endblock %}
