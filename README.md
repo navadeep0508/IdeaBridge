@@ -78,11 +78,7 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 > 3. Take screenshots and save in `docs/images/screenshots/`
 > 4. Run the capture script: `capture-screenshots.bat`
 >
-> **Missing screenshots needed:**
-> - `mobile-responsive.png` - Mobile interface view
-> - `mobile-nav.png` - Mobile navigation menu
-> - `dashboard.png` - User dashboard/activity page
-
+>
 ## 🏗️ Architecture
 
 ### System Architecture
