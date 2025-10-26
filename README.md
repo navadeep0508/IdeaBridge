@@ -40,9 +40,11 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 - **Back to Top**: Quick navigation button
 ## 📸 Screenshots
 
-### Application Interface
+### ✅ Available Screenshots
+
+#### Application Interface
 ![Home Page](docs/images/screenshots/homepage.png)
-*Main dashboard showing featured ideas and modern UI design*
+*Main landing page showcasing modern UI design*
 
 ![Idea Management](docs/images/screenshots/idea-management.png)
 *Idea creation and management interface with form validation*
@@ -50,38 +52,36 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 ![User Authentication](docs/images/screenshots/authentication.png)
 *Login and registration forms with responsive design*
 
-### Mobile Responsiveness
-![Mobile View](docs/images/screenshots/mobile-responsive.png)
-*Mobile-optimized interface showcasing responsive design*
-
-![Mobile Navigation](docs/images/screenshots/mobile-nav.png)
-*Collapsible navigation menu for mobile devices*
-
-### Interactive Features
-![Dashboard](docs/images/screenshots/dashboard.png)
-*Main dashboard showing featured ideas and user activity*
-
+#### Admin & Chat Features
 ![Admin Panel](docs/images/screenshots/admin-panel.png)
 *Admin interface for managing users and content*
 
 ![Chat System](docs/images/screenshots/chat-system.png)
 *Real-time chat functionality for user interactions*
 
-> **Note**: To add actual screenshots to this README:
-> 1. Take screenshots of your running application
-> 2. Save them in the `docs/images/screenshots/` directory
-> 3. Update the image filenames in the sections above
-> 4. Commit and push the changes to see them in GitHub
+### 📋 Missing Screenshots (Need to Capture)
+
+#### Mobile Responsiveness
+![Mobile View](docs/images/screenshots/mobile-responsive.png)
+*Mobile-optimized interface showcasing responsive design*
+
+![Mobile Navigation](docs/images/screenshots/mobile-nav.png)
+*Collapsible navigation menu for mobile devices*
+
+#### User Dashboard
+![Dashboard](docs/images/screenshots/dashboard.png)
+*Main dashboard showing user activity and profile*
+
+> **🎯 Quick Screenshot Guide:**
+> 1. Visit your live site: https://ideabridge.onrender.com/
+> 2. Use browser dev tools (F12) to test mobile views
+> 3. Take screenshots and save in `docs/images/screenshots/`
+> 4. Run the capture script: `capture-screenshots.bat`
 >
-> **Screenshots to capture:**
-> - `homepage.png` - Main landing page
-> - `idea-management.png` - Create/edit idea forms
-> - `authentication.png` - Login/registration pages
-> - `mobile-responsive.png` - Mobile interface
-> - `mobile-nav.png` - Mobile navigation
-> - `dashboard.png` - Main dashboard with user activity
-> - `admin-panel.png` - Admin interface for management
-> - `chat-system.png` - Chat functionality
+> **Missing screenshots needed:**
+> - `mobile-responsive.png` - Mobile interface view
+> - `mobile-nav.png` - Mobile navigation menu
+> - `dashboard.png` - User dashboard/activity page
 
 ## 🏗️ Architecture
 
@@ -150,9 +150,11 @@ IdeaBridge/
 ├── migrate_db.py         # Database migration script
 ├── requirements.txt      # Python dependencies
 ├── data.db              # SQLite database
+├── capture-screenshots.bat # Windows screenshot capture guide
+├── capture-screenshots.sh  # Linux/Mac screenshot capture guide
 ├── docs/                # Documentation and images
 │   └── images/
-│       ├── screenshots/ # Application screenshots
+│       ├── screenshots/ # Application screenshots (8 total)
 │       └── diagrams/    # Architecture and flow diagrams
 ├── static/              # Static files (CSS, JS, images)
 │   ├── css/

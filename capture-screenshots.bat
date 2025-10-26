@@ -1,0 +1,40 @@
+@echo off
+REM Screenshot Capture Guide for IdeaBridge (Windows)
+REM Run this to get instructions for capturing screenshots
+
+echo 📸 IdeaBridge Screenshot Capture Guide
+echo ======================================
+echo.
+echo Please visit your live application: https://ideabridge.onrender.com/
+echo.
+echo 📱 MOBILE RESPONSIVE SCREENSHOT:
+echo 1. Open browser developer tools (F12)
+echo 2. Click device toggle (mobile/tablet icon)
+echo 3. Select a mobile device (e.g., iPhone 12)
+echo 4. Take screenshot of the main page
+echo 5. Save as: docs\images\screenshots\mobile-responsive.png
+echo.
+echo 📱 MOBILE NAVIGATION SCREENSHOT:
+echo 1. In mobile view, click the hamburger menu
+echo 2. Take screenshot showing the navigation menu open
+echo 3. Save as: docs\images\screenshots\mobile-nav.png
+echo.
+echo 🏠 DASHBOARD SCREENSHOT:
+echo 1. Login to your application
+echo 2. Navigate to the main dashboard/user profile page
+echo 3. Take screenshot showing user activity and dashboard
+echo 4. Save as: docs\images\screenshots\dashboard.png
+echo.
+echo ✅ ALREADY AVAILABLE:
+echo - homepage.png (main landing page)
+echo - idea-management.png (create/edit forms)
+echo - authentication.png (login/register)
+echo - admin-panel.png (admin interface)
+echo - chat-system.png (chat functionality)
+echo.
+echo After capturing screenshots:
+echo 1. Run: git add docs/images/screenshots/
+echo 2. Run: git commit -m "Add missing screenshots"
+echo 3. Run: git push origin main
+echo.
+pause
