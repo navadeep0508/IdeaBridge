@@ -36,7 +36,47 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 - **Mobile Menu**: Responsive navigation for mobile devices
 - **Scroll Progress**: Visual progress indicator
 - **Back to Top**: Quick navigation button
-- **Tooltips & Popovers**: Interactive UI elements
+## 📸 Screenshots
+
+### Application Interface
+![Home Page](docs/images/screenshots/homepage.png)
+*Main dashboard showing featured ideas and modern UI design*
+
+![Idea Management](docs/images/screenshots/idea-management.png)
+*Idea creation and management interface with form validation*
+
+![User Authentication](docs/images/screenshots/authentication.png)
+*Login and registration forms with responsive design*
+
+### Mobile Responsiveness
+![Mobile View](docs/images/screenshots/mobile-responsive.png)
+*Mobile-optimized interface showcasing responsive design*
+
+![Mobile Navigation](docs/images/screenshots/mobile-nav.png)
+*Collapsible navigation menu for mobile devices*
+
+### Interactive Features
+![Animations](docs/images/screenshots/animations.gif)
+*Smooth animations and transitions powered by AOS library*
+
+![Custom Cursor](docs/images/screenshots/custom-cursor.png)
+*Interactive custom cursor with hover effects*
+
+> **Note**: To add actual screenshots to this README:
+> 1. Take screenshots of your running application
+> 2. Save them in the `docs/images/screenshots/` directory
+> 3. Update the image filenames in the sections above
+> 4. Commit and push the changes to see them in GitHub
+
+## 🏗️ Architecture
+
+### System Architecture
+![Architecture Diagram](docs/images/diagrams/architecture-diagram.png)
+*High-level system architecture showing Flask backend, SQLite database, and frontend components*
+
+### Technology Stack
+![Tech Stack](docs/images/diagrams/tech-stack.png)
+*Complete technology stack visualization*
 
 ## 🛠️ Tech Stack
 
@@ -58,7 +98,7 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 
 1. **Clone the repository**
    ```bash
-   git clone <your-github-repo-url>
+   git clone https://github.com/navadeep0508/IdeaBridge.git
    cd IdeaBridge
    ```
 
@@ -95,6 +135,10 @@ IdeaBridge/
 ├── migrate_db.py         # Database migration script
 ├── requirements.txt      # Python dependencies
 ├── data.db              # SQLite database
+├── docs/                # Documentation and images
+│   └── images/
+│       ├── screenshots/ # Application screenshots
+│       └── diagrams/    # Architecture and flow diagrams
 ├── static/              # Static files (CSS, JS, images)
 │   ├── css/
 │   ├── js/
@@ -185,8 +229,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - Create an issue in this repository
-- Contact: [your-email@example.com]
+- Contact: [navadeep0508@gmail.com]
 
 ---
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by Navadeep**
