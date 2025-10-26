@@ -1,20 +1,264 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="mb-4">Post a Startup Idea</h2>
-<form method="post">
-  <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" id="title" name="title" class="form-control" required>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-lg border-0 animate__animated animate__fadeInUp">
+      <div class="card-header text-white py-4" style="background: linear-gradient(135deg, #345635 0%, #6B8F71 100%); border-radius: 16px 16px 0 0;">
+        <div class="d-flex align-items-center">
+          <i class='bx bx-bulb me-3' style="font-size: 2.5rem;"></i>
+          <div>
+            <h2 class="mb-1">Share Your Startup Idea</h2>
+            <p class="mb-0 opacity-75">Transform your vision into reality by sharing with our community</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-body p-5">
+        <form method="post" enctype="multipart/form-data">
+          <!-- Title -->
+          <div class="mb-4">
+            <label for="title" class="form-label">
+              <i class='bx bx-edit me-2'></i>Startup Title <span class="text-danger">*</span>
+            </label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Enter a compelling title for your idea" required>
+            <small class="text-muted">Make it catchy and descriptive (e.g., "AI-Powered Marketing Automation Platform")</small>
+          </div>
+          
+          <!-- Category & Tags Row -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label for="category" class="form-label">
+                <i class='bx bx-category me-2'></i>Category <span class="text-danger">*</span>
+              </label>
+              <select id="category" name="category" class="form-control" required>
+                <option value="">Select a category</option>
+                <option value="tech-ai">Tech & AI</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="health">Health & Wellness</option>
+                <option value="sustainability">Sustainability</option>
+                <option value="gaming">Gaming</option>
+                <option value="fintech">FinTech</option>
+                <option value="education">Education</option>
+                <option value="transportation">Transportation</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="tags" class="form-label">
+                <i class='bx bx-purchase-tag me-2'></i>Tags
+              </label>
+              <input type="text" id="tags" name="tags" class="form-control" placeholder="e.g., SaaS, B2B, Mobile App">
+              <small class="text-muted">Separate with commas</small>
+            </div>
+          </div>
+          
+          <!-- Image Upload -->
+          <div class="mb-4">
+            <label for="image" class="form-label">
+              <i class='bx bx-image me-2'></i>Cover Image
+            </label>
+            <input type="file" id="image" name="image" class="form-control" accept="image/*" onchange="previewImage(event)">
+            <small class="text-muted">Upload a cover image for your pitch (JPG, PNG, max 5MB)</small>
+            <div id="imagePreview" class="mt-3" style="display: none;">
+              <img id="preview" src="" alt="Preview" style="max-width: 100%; max-height: 300px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            </div>
+          </div>
+          
+          <!-- Summary -->
+          <div class="mb-4">
+            <label for="summary" class="form-label">
+              <i class='bx bx-message-square-detail me-2'></i>Elevator Pitch <span class="text-danger">*</span>
+            </label>
+            <textarea id="summary" name="summary" class="form-control" rows="2" placeholder="Describe your idea in one compelling sentence" required></textarea>
+            <small class="text-muted">A quick overview that captures attention (max 200 characters)</small>
+          </div>
+          
+          <!-- Full Pitch -->
+          <div class="mb-4">
+            <label for="content" class="form-label">
+              <i class='bx bx-file me-2'></i>Detailed Description <span class="text-danger">*</span>
+            </label>
+            <textarea id="content" name="content" class="form-control" rows="10" placeholder="Describe your startup idea in detail...
+
+• What problem does it solve?
+• Who is your target audience?
+• What makes it unique?
+• What is your business model?
+• What's your competitive advantage?" required></textarea>
+            <small class="text-muted">Be detailed and clear about your vision</small>
+          </div>
+          
+          <!-- Funding & Stage Row -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label for="funding_goal" class="form-label">
+                <i class='bx bx-dollar me-2'></i>Funding Goal
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" id="funding_goal" name="funding_goal" class="form-control" placeholder="50000" min="0">
+              </div>
+              <small class="text-muted">How much funding are you seeking?</small>
+            </div>
+            <div class="col-md-6">
+              <label for="stage" class="form-label">
+                <i class='bx bx-trending-up me-2'></i>Development Stage
+              </label>
+              <select id="stage" name="stage" class="form-control">
+                <option value="">Select stage</option>
+                <option value="idea">Idea Stage</option>
+                <option value="prototype">Prototype</option>
+                <option value="mvp">MVP Ready</option>
+                <option value="launched">Launched</option>
+                <option value="growing">Growing</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Team Size & Location Row -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label for="team_size" class="form-label">
+                <i class='bx bx-group me-2'></i>Team Size
+              </label>
+              <select id="team_size" name="team_size" class="form-control">
+                <option value="">Select team size</option>
+                <option value="solo">Solo Founder</option>
+                <option value="2-5">2-5 Members</option>
+                <option value="6-10">6-10 Members</option>
+                <option value="11+">11+ Members</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="location" class="form-label">
+                <i class='bx bx-map me-2'></i>Location
+              </label>
+              <input type="text" id="location" name="location" class="form-control" placeholder="e.g., San Francisco, CA">
+            </div>
+          </div>
+          
+          <!-- Website & Demo URL Row -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label for="website" class="form-label">
+                <i class='bx bx-link me-2'></i>Website URL
+              </label>
+              <input type="url" id="website" name="website" class="form-control" placeholder="https://yourwebsite.com">
+            </div>
+            <div class="col-md-6">
+              <label for="demo_url" class="form-label">
+                <i class='bx bx-video me-2'></i>Demo/Video URL
+              </label>
+              <input type="url" id="demo_url" name="demo_url" class="form-control" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+          
+          <!-- Looking For -->
+          <div class="mb-4">
+            <label class="form-label">
+              <i class='bx bx-search me-2'></i>What are you looking for?
+            </label>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="funding" id="looking_funding">
+                  <label class="form-check-label" for="looking_funding">Funding</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="cofounders" id="looking_cofounders">
+                  <label class="form-check-label" for="looking_cofounders">Co-founders</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="mentorship" id="looking_mentorship">
+                  <label class="form-check-label" for="looking_mentorship">Mentorship</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="feedback" id="looking_feedback">
+                  <label class="form-check-label" for="looking_feedback">Feedback</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="team" id="looking_team">
+                  <label class="form-check-label" for="looking_team">Team Members</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="looking_for" value="partners" id="looking_partners">
+                  <label class="form-check-label" for="looking_partners">Partners</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="d-flex gap-3 mt-5">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+              <i class='bx bx-send me-2'></i>Publish Pitch
+            </button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg px-4">
+              <i class='bx bx-x me-2'></i>Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Tips Section -->
+    <div class="card border-0 shadow-sm mt-4 animate__animated animate__fadeInUp animate__delay-1s" style="background: linear-gradient(135deg, #E3EFD3 0%, #ffffff 100%);">
+      <div class="card-body p-4">
+        <h5 class="mb-3"><i class='bx bx-bulb me-2' style="color: #C9A961;"></i>Tips for a Great Pitch</h5>
+        <ul class="mb-0">
+          <li class="mb-2"><strong>Be Clear:</strong> Explain your idea in simple, understandable terms</li>
+          <li class="mb-2"><strong>Show Value:</strong> Highlight the problem you're solving and why it matters</li>
+          <li class="mb-2"><strong>Be Specific:</strong> Include details about your target market and business model</li>
+          <li class="mb-0"><strong>Stay Professional:</strong> Use proper grammar and formatting</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="summary" class="form-label">Summary (short)</label>
-    <input type="text" id="summary" name="summary" class="form-control">
-  </div>
-  <div class="mb-3">
-    <label for="content" class="form-label">Full Pitch</label>
-    <textarea id="content" name="content" class="form-control" rows="12" required></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Publish Pitch</button>
-</form>
+</div>
+
+<script>
+function previewImage(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('preview');
+  const previewContainer = document.getElementById('imagePreview');
+  
+  if (file) {
+    // Check file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      event.target.value = '';
+      previewContainer.style.display = 'none';
+      return;
+    }
+    
+    // Check file type
+    if (!file.type.match('image.*')) {
+      alert('Please select an image file');
+      event.target.value = '';
+      previewContainer.style.display = 'none';
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      previewContainer.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    previewContainer.style.display = 'none';
+  }
+}
+</script>
 {% endblock %}

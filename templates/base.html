@@ -11,46 +11,119 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('index') }}"><i class='bx bxs-bulb'></i> IdeaBridge</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <nav class="navbar navbar-expand-lg sticky-top" style="background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(13, 43, 29, 0.08); border-bottom: 1px solid rgba(174, 195, 176, 0.2); padding: 16px 0;">
+    <div class="container">
+      <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}" style="font-size: 1.5rem; font-weight: 800; color: #0D2B1D; letter-spacing: -0.5px;">
+        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #345635, #6B8F71); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+          <i class='bx bxs-bulb' style="font-size: 1.5rem; color: white;"></i>
+        </div>
+        IdeaBridge
+      </a>
+      
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="color: #345635;">
+        <i class='bx bx-menu' style="font-size: 1.8rem;"></i>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
+        <!-- Main Navigation -->
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link px-3" href="{{ url_for('index') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+              <i class='bx bx-home-alt me-1'></i>Home
+            </a>
+          </li>
           {% if session.get('user_id') %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+              <a class="nav-link px-3" href="{{ url_for('dashboard') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+                <i class='bx bx-dashboard me-1'></i>Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="{{ url_for('post') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+                <i class='bx bx-plus-circle me-1'></i>Post Idea
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3 position-relative" href="{{ url_for('messages') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+                <i class='bx bx-envelope me-1'></i>Messages
+                {% if unread_count is defined and unread_count > 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: #dc3545; font-size: 0.65rem; padding: 3px 6px;">
+                  {{ unread_count }}
+                </span>
+                {% endif %}
+              </a>
             </li>
             {% if session.get('role') == 'admin' %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin') }}">Admin</a>
+              <a class="nav-link px-3" href="{{ url_for('admin') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+                <i class='bx bx-shield-quarter me-1'></i>Admin
+              </a>
             </li>
             {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('post') }}">Post Idea</a>
-            </li>
           {% endif %}
         </ul>
-        <form class="d-flex me-3" action="{{ url_for('index') }}" method="get">
-          <input class="form-control me-2" type="search" name="q" placeholder="Search ideas..." aria-label="Search" value="{{ request.args.get('q', '') }}">
-          <button class="btn btn-outline-light" type="submit"><i class='bx bx-search'></i></button>
-        </form>
-        <ul class="navbar-nav">
+        
+        <!-- Right Side -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Search -->
+          <form class="d-flex" action="{{ url_for('index') }}" method="get" style="position: relative;">
+            <input class="form-control" type="search" name="q" placeholder="Search..." style="border-radius: 50px; border: 2px solid #AEC3B0; padding: 8px 40px 8px 20px; width: 200px; transition: all 0.3s ease;" value="{{ request.args.get('q', '') }}" onfocus="this.style.width='250px'; this.style.borderColor='#345635'" onblur="this.style.width='200px'; this.style.borderColor='#AEC3B0'">
+            <button class="btn" type="submit" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: #345635; padding: 4px 12px;">
+              <i class='bx bx-search' style="font-size: 1.2rem;"></i>
+            </button>
+          </form>
+          
           {% if not session.get('user_id') %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-            </li>
+            <!-- Guest Buttons -->
+            <a href="{{ url_for('login') }}" class="btn px-4 py-2" style="background: white; color: #345635; border: 2px solid #345635; border-radius: 50px; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#345635'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#345635'">
+              Login
+            </a>
+            <a href="{{ url_for('register') }}" class="btn px-4 py-2" style="background: linear-gradient(135deg, #345635, #6B8F71); color: white; border: none; border-radius: 50px; font-weight: 600; box-shadow: 0 4px 12px rgba(52, 86, 53, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(52, 86, 53, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(52, 86, 53, 0.3)'">
+              Sign Up
+            </a>
           {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('logout') }}">Logout ({{ session.get('username') }})</a>
-            </li>
+            <!-- User Dropdown -->
+            <div class="dropdown">
+              <button class="btn d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" style="background: #E3EFD3; color: #0D2B1D; border: none; border-radius: 50px; padding: 8px 20px; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#AEC3B0'" onmouseout="this.style.background='#E3EFD3'">
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #345635, #6B8F71); display: flex; align-items: center; justify-content: center;">
+                  <span style="color: white; font-weight: 700; font-size: 0.9rem;">{{ session.get('username')[0].upper() }}</span>
+                </div>
+                <span>{{ session.get('username') }}</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" style="border-radius: 16px; border: none; box-shadow: 0 8px 24px rgba(13, 43, 29, 0.15); padding: 12px; min-width: 220px; margin-top: 8px;">
+                <li class="px-3 py-2 mb-2" style="border-bottom: 1px solid #E3EFD3;">
+                  <small class="text-muted d-block">Signed in as</small>
+                  <strong style="color: #0D2B1D;">{{ session.get('username') }}</strong>
+                  <br>
+                  <span class="badge mt-1" style="background: #E3EFD3; color: #345635; font-size: 0.7rem;">{{ session.get('role', 'user').upper() }}</span>
+                </li>
+                <li><a class="dropdown-item" href="{{ url_for('dashboard') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-dashboard me-2'></i>Dashboard
+                </a></li>
+                <li><a class="dropdown-item" href="{{ url_for('post') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-plus-circle me-2'></i>Post Idea
+                </a></li>
+                <li><a class="dropdown-item" href="{{ url_for('messages') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-envelope me-2'></i>Messages
+                  {% if unread_count is defined and unread_count > 0 %}
+                  <span class="badge" style="background: #dc3545; color: white; font-size: 0.7rem; margin-left: 4px;">{{ unread_count }}</span>
+                  {% endif %}
+                </a></li>
+                {% if session.get('role') == 'admin' %}
+                <li><a class="dropdown-item" href="{{ url_for('admin') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-shield-quarter me-2'></i>Admin Panel
+                </a></li>
+                {% endif %}
+                <li><hr class="dropdown-divider" style="margin: 8px 0; border-color: #E3EFD3;"></li>
+                <li><a class="dropdown-item" href="{{ url_for('logout') }}" style="border-radius: 8px; padding: 10px 16px; color: #dc3545; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(220, 53, 69, 0.1)'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-log-out me-2'></i>Logout
+                </a></li>
+              </ul>
+            </div>
           {% endif %}
-        </ul>
+        </div>
       </div>
     </div>
   </nav>
@@ -69,7 +142,7 @@
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="bg-dark text-light py-5 mt-5">
+  <footer class="text-light py-5 mt-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 mb-4">

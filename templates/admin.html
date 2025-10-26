@@ -1,49 +1,262 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="mb-4">Admin Panel</h2>
+<!-- Header -->
+<section style="background: linear-gradient(135deg, #0D2B1D 0%, #345635 100%); padding: 60px 0 40px; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+  
+  <div class="container position-relative">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-right: 24px;">
+          <i class='bx bx-shield-quarter' style="font-size: 3rem; color: white;"></i>
+        </div>
+        <div>
+          <h1 class="fw-bold mb-2 text-white">Admin Control Panel</h1>
+          <p class="mb-0 text-white opacity-75">Manage users, pitches, and platform settings</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h3>Users</h3>
-<div class="table-responsive">
-  <table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Role</th>
-        <th>Joined</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for u in users %}
-      <tr>
-        <td>{{ u['id'] }}</td>
-        <td>{{ u['username'] }}</td>
-        <td>{{ u['role'] }}</td>
-        <td>{{ u['created_at'][:19] if u['created_at'] }}</td>
-        <td>
-          <form method="post" class="d-inline-block me-2">
-            <input type="hidden" name="target" value="{{ u['username'] }}">
-            <input type="hidden" name="action" value="promote">
-            <div class="input-group">
-              <select name="newrole" class="form-select">
-                <option value="verified">verified</option>
-                <option value="experienced">experienced</option>
-                <option value="admin">admin</option>
-              </select>
-              <button type="submit" class="btn btn-primary btn-sm">Update</button>
+<!-- Statistics Dashboard -->
+<section style="padding: 60px 0; background: white;">
+  <div class="container">
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, #345635 0%, #6B8F71 100%); box-shadow: 0 8px 24px rgba(52, 86, 53, 0.2);">
+          <div class="card-body p-4 text-white">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <p class="mb-2 opacity-75" style="font-size: 0.9rem; font-weight: 600;">TOTAL USERS</p>
+                <h2 class="mb-0 fw-bold" style="font-size: 2.5rem;">{{ total_users }}</h2>
+              </div>
+              <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+                <i class='bx bx-user' style="font-size: 2rem;"></i>
+              </div>
             </div>
-          </form>
-          <form method="post" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this user?')">
-            <input type="hidden" name="target" value="{{ u['username'] }}">
-            <input type="hidden" name="action" value="delete">
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, #6B8F71 0%, #AEC3B0 100%); box-shadow: 0 8px 24px rgba(107, 143, 113, 0.2);">
+          <div class="card-body p-4 text-white">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <p class="mb-2 opacity-75" style="font-size: 0.9rem; font-weight: 600;">TOTAL PITCHES</p>
+                <h2 class="mb-0 fw-bold" style="font-size: 2.5rem;">{{ total_pitches }}</h2>
+              </div>
+              <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+                <i class='bx bx-bulb' style="font-size: 2rem;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, #C9A961 0%, #AEC3B0 100%); box-shadow: 0 8px 24px rgba(201, 169, 97, 0.2);">
+          <div class="card-body p-4 text-white">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <p class="mb-2 opacity-75" style="font-size: 0.9rem; font-weight: 600;">TOTAL COMMENTS</p>
+                <h2 class="mb-0 fw-bold" style="font-size: 2.5rem;">{{ total_comments }}</h2>
+              </div>
+              <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+                <i class='bx bx-comment' style="font-size: 2rem;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, #AEC3B0 0%, #E3EFD3 100%); box-shadow: 0 8px 24px rgba(174, 195, 176, 0.2);">
+          <div class="card-body p-4" style="color: #345635;">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <p class="mb-2 opacity-75" style="font-size: 0.9rem; font-weight: 600;">TOTAL LIKES</p>
+                <h2 class="mb-0 fw-bold" style="font-size: 2.5rem;">{{ total_likes }}</h2>
+              </div>
+              <div style="width: 60px; height: 60px; background: rgba(52, 86, 53, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+                <i class='bx bx-heart' style="font-size: 2rem;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-pills mb-4" style="background: #E3EFD3; padding: 8px; border-radius: 50px;">
+      <li class="nav-item flex-fill">
+        <a class="nav-link active text-center" data-bs-toggle="pill" href="#users" style="border-radius: 50px; font-weight: 600;">
+          <i class='bx bx-user me-2'></i>Users ({{ users|length }})
+        </a>
+      </li>
+      <li class="nav-item flex-fill">
+        <a class="nav-link text-center" data-bs-toggle="pill" href="#pitches" style="border-radius: 50px; font-weight: 600;">
+          <i class='bx bx-bulb me-2'></i>Pitches ({{ pitches|length }})
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Users Tab -->
+      <div class="tab-pane fade show active" id="users">
+        <div class="card border-0" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(13, 43, 29, 0.1);">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead style="background: linear-gradient(135deg, #345635 0%, #6B8F71 100%); color: white;">
+                  <tr>
+                    <th class="px-4 py-3" style="border-radius: 24px 0 0 0;">ID</th>
+                    <th class="py-3">User</th>
+                    <th class="py-3">Role</th>
+                    <th class="py-3">Pitches</th>
+                    <th class="py-3">Joined</th>
+                    <th class="py-3" style="border-radius: 0 24px 0 0;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for u in users %}
+                  <tr style="border-bottom: 1px solid #E3EFD3;">
+                    <td class="px-4 py-4">
+                      <span class="fw-bold" style="color: #345635; font-size: 1.1rem;">#{{ u['id'] }}</span>
+                    </td>
+                    <td class="py-4">
+                      <div class="d-flex align-items-center">
+                        <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #6B8F71, #AEC3B0); display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                          <span class="fw-bold" style="color: white; font-size: 1.1rem;">{{ u['username'][0].upper() }}</span>
+                        </div>
+                        <div>
+                          <p class="mb-0 fw-bold" style="color: #0D2B1D;">{{ u['username'] }}</p>
+                          <small class="text-muted">ID: {{ u['id'] }}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-4">
+                      <span class="badge px-3 py-2" style="background: {% if u['role'] == 'admin' %}linear-gradient(135deg, #345635, #6B8F71){% elif u['role'] == 'verified' %}linear-gradient(135deg, #6B8F71, #AEC3B0){% else %}#E3EFD3{% endif %}; color: {% if u['role'] in ['admin', 'verified'] %}white{% else %}#345635{% endif %}; border-radius: 8px; font-size: 0.85rem;">
+                        {{ u['role'].upper() }}
+                      </span>
+                    </td>
+                    <td class="py-4">
+                      <span class="fw-semibold" style="color: #345635;">{{ u['pitch_count'] }}</span>
+                    </td>
+                    <td class="py-4">
+                      <small class="text-muted">
+                        <i class='bx bx-calendar me-1'></i>{{ u['created_at'][:10] if u['created_at'] }}
+                      </small>
+                    </td>
+                    <td class="py-4">
+                      <div class="d-flex gap-2">
+                        <form method="post" class="d-inline-block">
+                          <input type="hidden" name="target" value="{{ u['username'] }}">
+                          <input type="hidden" name="action" value="promote">
+                          <div class="input-group input-group-sm" style="width: 200px;">
+                            <select name="newrole" class="form-select" style="border-radius: 8px 0 0 8px; border: 2px solid #AEC3B0;">
+                              <option value="user" {% if u['role'] == 'user' %}selected{% endif %}>User</option>
+                              <option value="verified" {% if u['role'] == 'verified' %}selected{% endif %}>Verified</option>
+                              <option value="experienced" {% if u['role'] == 'experienced' %}selected{% endif %}>Experienced</option>
+                              <option value="admin" {% if u['role'] == 'admin' %}selected{% endif %}>Admin</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm" style="background: linear-gradient(135deg, #345635, #6B8F71); color: white; border: none; border-radius: 0 8px 8px 0;">
+                              <i class='bx bx-check'></i>
+                            </button>
+                          </div>
+                        </form>
+                        <form method="post" class="d-inline-block" onsubmit="return confirm('Delete user {{ u['username'] }}? This will also delete all their pitches and comments.')">
+                          <input type="hidden" name="target" value="{{ u['username'] }}">
+                          <input type="hidden" name="action" value="delete_user">
+                          <button type="submit" class="btn btn-sm" style="background: #dc3545; color: white; border: none; border-radius: 8px; padding: 6px 12px;">
+                            <i class='bx bx-trash'></i>
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pitches Tab -->
+      <div class="tab-pane fade" id="pitches">
+        <div class="row g-4">
+          {% for p in pitches %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 h-100" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(13, 43, 29, 0.08);">
+              {% if p.image and p.image != 'None' %}
+              <div style="height: 180px; overflow: hidden; background: linear-gradient(135deg, #E3EFD3 0%, #AEC3B0 100%);">
+                <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p['title'] }}" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              {% else %}
+              <div style="height: 180px; background: linear-gradient(135deg, #E3EFD3 0%, #AEC3B0 100%); display: flex; align-items: center; justify-content: center;">
+                <i class='bx bx-bulb' style="font-size: 3rem; color: #6B8F71;"></i>
+              </div>
+              {% endif %}
+              
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  {% if p.category %}
+                  <span class="badge px-3 py-1" style="background: #E3EFD3; color: #345635; border-radius: 8px; font-size: 0.75rem;">{{ p.category.replace('-', ' ').title() }}</span>
+                  {% endif %}
+                  <small class="text-muted">ID: {{ p['id'] }}</small>
+                </div>
+                
+                <h6 class="fw-bold mb-2" style="color: #0D2B1D;">{{ p['title'][:50] }}{% if p['title']|length > 50 %}...{% endif %}</h6>
+                
+                <div class="d-flex align-items-center mb-3">
+                  <div style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #6B8F71, #AEC3B0); display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                    <span class="fw-bold" style="color: white; font-size: 0.8rem;">{{ p['username'][0].upper() }}</span>
+                  </div>
+                  <small class="text-muted">{{ p['username'] }}</small>
+                </div>
+                
+                <small class="text-muted d-block mb-3">
+                  <i class='bx bx-calendar me-1'></i>{{ p['created_at'][:10] if p['created_at'] }}
+                </small>
+                
+                <div class="d-flex gap-2">
+                  <a href="{{ url_for('pitch', pitch_id=p['id']) }}" class="btn btn-sm px-3 py-2 flex-grow-1" style="background: white; color: #345635; border: 2px solid #AEC3B0; border-radius: 8px; font-weight: 600;">
+                    <i class='bx bx-show me-1'></i>View
+                  </a>
+                  <form method="post" class="d-inline-block" onsubmit="return confirm('Delete this pitch?')">
+                    <input type="hidden" name="pitch_id" value="{{ p['id'] }}">
+                    <input type="hidden" name="action" value="delete_pitch">
+                    <button type="submit" class="btn btn-sm px-3 py-2" style="background: #dc3545; color: white; border: none; border-radius: 8px;">
+                      <i class='bx bx-trash'></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.nav-pills .nav-link {
+  color: #345635;
+  transition: all 0.3s ease;
+}
+.nav-pills .nav-link.active {
+  background: linear-gradient(135deg, #345635, #6B8F71);
+  color: white;
+}
+.nav-pills .nav-link:hover:not(.active) {
+  background: rgba(52, 86, 53, 0.1);
+}
+</style>
 {% endblock %}

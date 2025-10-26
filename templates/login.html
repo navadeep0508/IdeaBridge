@@ -1,20 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <h2 class="mb-4">Login</h2>
-    <form method="post">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" name="username" class="form-control" required>
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="col-md-5 col-lg-4">
+    <div class="card shadow-lg border-0 animate__animated animate__fadeInUp">
+      <div class="card-body p-5">
+        <div class="text-center mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 80px; height: 80px; background: linear-gradient(135deg, #345635 0%, #6B8F71 100%);">
+            <i class='bx bxs-user-circle text-white' style="font-size: 3rem;"></i>
+          </div>
+          <h2 class="fw-bold mb-2">Welcome Back</h2>
+          <p class="text-muted">Sign in to continue to IdeaBridge</p>
+        </div>
+        
+        <form method="post">
+          <div class="mb-4">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0" style="border-radius: 12px 0 0 12px; border: 2px solid #AEC3B0; border-right: none;">
+                <i class='bx bx-user' style="color: #6B8F71;"></i>
+              </span>
+              <input type="text" id="username" name="username" class="form-control border-start-0 ps-0" style="border-radius: 0 12px 12px 0; border: 2px solid #AEC3B0; border-left: none;" placeholder="Enter your username" required>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0" style="border-radius: 12px 0 0 12px; border: 2px solid #AEC3B0; border-right: none;">
+                <i class='bx bx-lock-alt' style="color: #6B8F71;"></i>
+              </span>
+              <input type="password" id="password" name="password" class="form-control border-start-0 ps-0" style="border-radius: 0 12px 12px 0; border: 2px solid #AEC3B0; border-left: none;" placeholder="Enter your password" required>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100 py-3 mb-3">
+            <i class='bx bx-log-in me-2'></i>Sign In
+          </button>
+        </form>
+        
+        <div class="text-center mt-4">
+          <p class="mb-0 text-muted">Don't have an account? <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold" style="color: #345635;">Sign Up</a></p>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+    </div>
   </div>
 </div>
 {% endblock %}

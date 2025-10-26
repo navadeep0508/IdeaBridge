@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, #E3EFD3 0%, #ffffff 100%); padding: 60px 0 40px;">
+  <div class="container">
+    <h1 class="fw-bold mb-2" style="color: #0D2B1D;">
+      <i class='bx bx-envelope me-3'></i>Send Message
+    </h1>
+    <p class="text-muted mb-0">to {{ receiver.username }}</p>
+  </div>
+</section>
+
+<!-- Form -->
+<section style="padding: 60px 0; background: white;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(13, 43, 29, 0.1);">
+          <div class="card-body p-5">
+            <!-- Recipient Info -->
+            <div class="d-flex align-items-center mb-4 p-4" style="background: #E3EFD3; border-radius: 16px;">
+              <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #345635, #6B8F71); display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                <span class="fw-bold" style="color: white; font-size: 1.5rem;">{{ receiver.username[0].upper() }}</span>
+              </div>
+              <div>
+                <h5 class="mb-0 fw-bold" style="color: #0D2B1D;">{{ receiver.username }}</h5>
+                <small class="text-muted">Entrepreneur</small>
+              </div>
+            </div>
+            
+            <!-- Form -->
+            <form method="POST">
+              <div class="mb-4">
+                <label for="subject" class="form-label fw-semibold" style="color: #0D2B1D;">
+                  <i class='bx bx-text me-2'></i>Subject (Optional)
+                </label>
+                <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter message subject" style="border-radius: 12px; border: 2px solid #AEC3B0; padding: 12px 20px;">
+              </div>
+              
+              <div class="mb-4">
+                <label for="content" class="form-label fw-semibold" style="color: #0D2B1D;">
+                  <i class='bx bx-message-detail me-2'></i>Message <span class="text-danger">*</span>
+                </label>
+                <textarea id="content" name="content" class="form-control" rows="8" placeholder="Write your message here..." required style="border-radius: 12px; border: 2px solid #AEC3B0; padding: 12px 20px;"></textarea>
+                <small class="text-muted">Be clear and professional in your communication</small>
+              </div>
+              
+              <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-lg px-5 py-3" style="background: linear-gradient(135deg, #345635, #6B8F71); color: white; border: none; border-radius: 50px; font-weight: 700;">
+                  <i class='bx bx-send me-2'></i>Send Message
+                </button>
+                <a href="{{ url_for('messages') }}" class="btn btn-lg px-5 py-3" style="background: white; color: #345635; border: 2px solid #AEC3B0; border-radius: 50px; font-weight: 700;">
+                  <i class='bx bx-x me-2'></i>Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
