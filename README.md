@@ -59,18 +59,6 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 ![Chat System](docs/images/screenshots/chat-system.png)
 *Real-time chat functionality for user interactions*
 
-### 📋 Missing Screenshots (Need to Capture)
-
-#### Mobile Responsiveness
-![Mobile View](docs/images/screenshots/mobile-responsive.png)
-*Mobile-optimized interface showcasing responsive design*
-
-![Mobile Navigation](docs/images/screenshots/mobile-nav.png)
-*Collapsible navigation menu for mobile devices*
-
-#### User Dashboard
-![Dashboard](docs/images/screenshots/dashboard.png)
-*Main dashboard showing user activity and profile*
 
 > **🎯 Quick Screenshot Guide:**
 > 1. Visit your live site: https://ideabridge.onrender.com/
