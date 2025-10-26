@@ -16,6 +16,8 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 ### Core Functionality
 - **Idea Management**: Create, read, update, and delete ideas
 - **User Authentication**: Secure login and registration system
+- **Admin Panel**: Comprehensive admin interface for user and content management
+- **Real-time Chat**: Interactive messaging system for user communication
 - **Responsive Design**: Optimized for all devices
 - **Interactive UI**: Modern animations and smooth transitions
 - **Database Integration**: SQLite database for data persistence
@@ -56,17 +58,30 @@ Visit the live application: **[https://ideabridge.onrender.com/](https://ideabri
 *Collapsible navigation menu for mobile devices*
 
 ### Interactive Features
-![Animations](docs/images/screenshots/animations.gif)
-*Smooth animations and transitions powered by AOS library*
+![Dashboard](docs/images/screenshots/dashboard.png)
+*Main dashboard showing featured ideas and user activity*
 
-![Custom Cursor](docs/images/screenshots/custom-cursor.png)
-*Interactive custom cursor with hover effects*
+![Admin Panel](docs/images/screenshots/admin-panel.png)
+*Admin interface for managing users and content*
+
+![Chat System](docs/images/screenshots/chat-system.png)
+*Real-time chat functionality for user interactions*
 
 > **Note**: To add actual screenshots to this README:
 > 1. Take screenshots of your running application
 > 2. Save them in the `docs/images/screenshots/` directory
 > 3. Update the image filenames in the sections above
 > 4. Commit and push the changes to see them in GitHub
+>
+> **Screenshots to capture:**
+> - `homepage.png` - Main landing page
+> - `idea-management.png` - Create/edit idea forms
+> - `authentication.png` - Login/registration pages
+> - `mobile-responsive.png` - Mobile interface
+> - `mobile-nav.png` - Mobile navigation
+> - `dashboard.png` - Main dashboard with user activity
+> - `admin-panel.png` - Admin interface for management
+> - `chat-system.png` - Chat functionality
 
 ## 🏗️ Architecture
 
@@ -192,6 +207,8 @@ For production deployment, set the following environment variables:
 3. **Login**: Access your account to manage your ideas
 4. **Submit Ideas**: Share your innovative concepts with the community
 5. **View Ideas**: Explore and interact with ideas from other users
+6. **Chat System**: Communicate with other users in real-time
+7. **Admin Panel** (Admin users): Manage users, moderate content, and view analytics
 
 ## 🎨 Customization
 
