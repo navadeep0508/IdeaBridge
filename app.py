@@ -5,6 +5,9 @@ from werkzeug.utils import secure_filename
 from functools import wraps
 import os
 from datetime import datetime
+import requests
+import threading
+import time
 
 BASE_DIR = os.path.dirname(__file__)
 DB_PATH = os.path.join(BASE_DIR, 'data.db')
@@ -351,9 +354,18 @@ def admin():
                           total_pitches=total_pitches,
                           total_comments=total_comments,
                           total_likes=total_likes)
+def ping_self():
+    while True:
+        try:
+            requests.get("https://ideabridge.onrender.com")  # Replace with your app URL
+            print("Self ping successful")
+        except Exception as e:
+            print(f"Ping failed: {e}")
+        time.sleep(600)  # Ping every 10 minutes
 
 if __name__ == '__main__':
     if not os.path.exists(DB_PATH):
         from init_db import init_db
         init_db(DB_PATH)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    threading.Thread(target=ping_self, daemon=True).start()
+    app.run(host="0.0.0.0", port=5000)
