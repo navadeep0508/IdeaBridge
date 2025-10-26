@@ -1,53 +1,125 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IdeaBridge</title>
+  <title>IdeaBridge | Where Ideas Meet Opportunity</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.css">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/cursor-effects@latest/dist/browser.css" />
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body class="bg-dark text-light">
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+  
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader">
+      <div class="loader-circle"></div>
+      <div class="loader-text">IdeaBridge</div>
+    </div>
+  </div>
+  
+  <!-- Scroll Progress -->
+  <div class="scroll-progress"></div>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><i class='bx bxs-bulb'></i> IdeaBridge</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Register</a>
-            </li>
-        </ul>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class='bx bx-shield-quarter'></i>
+            </div>
+            <h4 class="h5 mt-4 mb-3">Secure Platform</h4>
+            <p class="text-muted mb-0">Your ideas are protected with enterprise-grade security and end-to-end encryption.</p>
+            <div class="feature-hover"></div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container mt-4">
-<section class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); background-size: cover; background-position: center; height: 70vh;">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6">
-        <h1 class="display-4 fw-bold animate__animated animate__fadeInUp">Bridge Ideas to Investment</h1>
-        <p class="lead animate__animated animate__fadeInUp animate__delay-1s">Connecting innovators and investors: share your startup ideas and find the perfect partners to bring them to market.</p>
-        <div class="mt-4 animate__animated animate__fadeInUp animate__delay-2s">
-          <a href="#pitches" class="btn btn-primary btn-lg me-3"><i class='bx bx-rocket'></i> Explore Ideas</a>
-          <a href="#" class="btn btn-outline-light btn-lg"><i class='bx bx-user-plus'></i> Join Now</a>
+<!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="particles" id="particles-js"></div>
+    <div class="gradient-bg"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section min-vh-100 d-flex align-items-center position-relative overflow-hidden">
+    <div class="hero-video">
+      <video autoplay muted loop id="heroVideo">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-network-of-lines-in-motion-4240-large.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+  <div class="container position-relative z-index-1">
+    <div class="row min-vh-100 align-items-center">
+      <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1000">
+        <h6 class="text-primary mb-3 text-uppercase fw-bold tracking-wider"><span class="highlight-text">Welcome to IdeaBridge</span></h6>
+        <h1 class="display-3 fw-bold mb-4">Where <span class="text-gradient">Innovation</span> Meets <span class="text-gradient">Opportunity</span></h1>
+        <p class="lead mb-5">Transform your startup dreams into reality. Connect with visionary investors and like-minded entrepreneurs in our thriving innovation ecosystem.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#pitches" class="btn btn-primary btn-lg px-4 py-3 me-3 btn-hover-effect">
+            <span class="btn-content">
+              <i class='bx bx-rocket me-2'></i> Explore Ideas
+            </span>
+            <span class="btn-hover"></span>
+          </a>
+          <a href="#" class="btn btn-outline-light btn-lg px-4 py-3 btn-hover-effect">
+            <span class="btn-content">
+              <i class='bx bx-user-plus me-2'></i> Join Our Community
+            </span>
+            <span class="btn-hover"></span>
+          </a>
+        </div>
+        <div class="d-flex align-items-center mt-5">
+          <div class="d-flex me-4">
+            <div class="avatar-group">
+              <div class="avatar"><img src="https://randomuser.me/api/portraits/women/43.jpg" alt="User"></div>
+              <div class="avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"></div>
+              <div class="avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="User"></div>
+            </div>
+          </div>
+          <div>
+            <p class="mb-0 small">Join <span class="fw-bold">5000+</span> innovators and investors</p>
+            <div class="stars">
+              <i class='bx bxs-star text-warning'></i>
+              <i class='bx bxs-star text-warning'></i>
+              <i class='bx bxs-star text-warning'></i>
+              <i class='bx bxs-star text-warning'></i>
+              <i class='bx bxs-star text-warning'></i>
+              <span class="ms-2">4.9/5 from 2.3k+ reviews</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-lg-6 d-none d-lg-block">
-        <div class="floating-elements">
-          <div class="floating-icon animate__animated animate__bounceIn animate__delay-3s" style="position: absolute; top: 20%; right: 20%;"><i class='bx bxs-bulb' style="font-size: 3rem; color: #50e3c2;"></i></div>
-          <div class="floating-icon animate__animated animate__bounceIn animate__delay-4s" style="position: absolute; bottom: 20%; right: 10%;"><i class='bx bxs-rocket' style="font-size: 2.5rem; color: #4a90e2;"></i></div>
+      <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+        <div class="hero-illustration position-relative">
+          <div class="floating-shape shape-1">
+            <img src="https://img.icons8.com/color/96/000000/idea.png" alt="Idea" class="img-fluid">
+          </div>
+          <div class="floating-shape shape-2">
+            <img src="https://img.icons8.com/color/96/000000/rocket.png" alt="Rocket" class="img-fluid">
+          </div>
+          <div class="floating-shape shape-3">
+            <img src="https://img.icons8.com/color/96/000000/startup.png" alt="Startup" class="img-fluid">
+          </div>
+          <div class="main-illustration">
+            <img src="https://img.icons8.com/clouds/500/000000/startup-life.png" alt="Startup Illustration" class="img-fluid">
+          </div>
+          <div class="pulse-animation"></div>
           <div class="floating-icon animate__animated animate__bounceIn animate__delay-5s" style="position: absolute; top: 50%; right: 30%;"><i class='bx bxs-flame' style="font-size: 2rem; color: #ff6b6b;"></i></div>
         </div>
       </div>
@@ -56,7 +128,14 @@
 </section>
 
 <!-- Features Section -->
-<section class="features-section py-5 bg-light">
+<!-- Features Section -->
+  <section id="features" class="features-section py-6 position-relative overflow-hidden">
+    <div class="container position-relative z-index-1">
+      <div class="section-header text-center mb-5" data-aos="fade-up">
+        <h6 class="text-uppercase text-primary fw-bold mb-3">Why Choose Us</h6>
+        <h2 class="display-5 fw-bold mb-4">Powerful Features to <span class="text-gradient">Accelerate</span> Your Success</h2>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">Discover how IdeaBridge can transform your entrepreneurial journey with our cutting-edge platform</p>
+      </div>
   <div class="container">
     <div class="row text-center mb-5">
       <div class="col-12">
