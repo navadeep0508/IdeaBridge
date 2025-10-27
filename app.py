@@ -51,6 +51,57 @@ def execute_db(query, args=()):
     cur.close()
     return cur.lastrowid
 
+# Notification functions
+def create_notification(user_id, notification_type, title, message, related_id=None, related_type=None):
+    """Create a new notification for a user"""
+    execute_db('''INSERT INTO notifications
+                  (user_id, type, title, message, related_id, related_type, created_at)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)''',
+               [user_id, notification_type, title, message, related_id, related_type,
+                datetime.utcnow().isoformat()])
+
+def get_user_notifications(user_id, limit=50):
+    """Get notifications for a user, ordered by creation date (newest first)"""
+    return query_db('''SELECT n.*, u.username as related_username
+                      FROM notifications n
+                      LEFT JOIN users u ON n.related_id = u.id AND n.related_type = 'user'
+                      WHERE n.user_id = ?
+                      ORDER BY n.created_at DESC
+                      LIMIT ?''', [user_id, limit])
+
+def get_unread_count(user_id):
+    """Get count of unread notifications for a user"""
+    result = query_db('SELECT COUNT(*) as count FROM notifications WHERE user_id = ? AND is_read = 0',
+                      [user_id], one=True)
+    return result['count'] if result else 0
+
+def mark_notification_read(notification_id, user_id):
+    """Mark a specific notification as read"""
+    execute_db('UPDATE notifications SET is_read = 1 WHERE id = ? AND user_id = ?',
+               [notification_id, user_id])
+
+def mark_all_notifications_read(user_id):
+    """Mark all notifications as read for a user"""
+    execute_db('UPDATE notifications SET is_read = 1 WHERE user_id = ? AND is_read = 0', [user_id])
+
+def delete_notification(notification_id, user_id):
+    """Delete a specific notification"""
+    execute_db('DELETE FROM notifications WHERE id = ? AND user_id = ?', [notification_id, user_id])
+
+@app.context_processor
+def inject_notification_count():
+    """Make notification count available to all templates"""
+    if session.get('user_id'):
+        unread_notifications = get_unread_count(session['user_id'])
+        unread_messages = query_db('SELECT COUNT(*) as count FROM messages WHERE receiver_id = ? AND is_read = 0',
+                                   [session['user_id']], one=True)
+        unread_messages_count = unread_messages['count'] if unread_messages else 0
+        return {
+            'notification_count': unread_notifications,
+            'unread_count': unread_messages_count
+        }
+    return {'notification_count': 0, 'unread_count': 0}
+
 def login_required(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
@@ -202,12 +253,15 @@ def post():
 def dashboard():
     user = query_db('SELECT * FROM users WHERE id = ?', [session['user_id']], one=True)
     pitches = query_db('SELECT * FROM pitches WHERE author_id = ? ORDER BY created_at DESC', [session['user_id']])
-    
+
     # Get unread message count
     unread_count = query_db('SELECT COUNT(*) as count FROM messages WHERE receiver_id = ? AND is_read = 0', 
                            [session['user_id']], one=True)['count']
-    
-    return render_template('dashboard.html', user=user, pitches=pitches, unread_count=unread_count)
+
+    # Get unread notification count
+    notification_count = get_unread_count(session['user_id'])
+
+    return render_template('dashboard.html', user=user, pitches=pitches, unread_count=unread_count, notification_count=notification_count)
 
 # Like/Unlike pitch
 @app.route('/pitch/<int:pitch_id>/like', methods=['POST'])
@@ -215,20 +269,38 @@ def dashboard():
 def like_pitch(pitch_id):
     user_id = session['user_id']
     existing = query_db('SELECT * FROM likes WHERE pitch_id = ? AND user_id = ?', [pitch_id, user_id], one=True)
-    
+
+    # Get pitch info to find the author
+    pitch = query_db('SELECT * FROM pitches WHERE id = ?', [pitch_id], one=True)
+    if not pitch:
+        return {'success': False, 'error': 'Pitch not found'}, 404
+
     if existing:
         # Unlike
         execute_db('DELETE FROM likes WHERE pitch_id = ? AND user_id = ?', [pitch_id, user_id])
         liked = False
     else:
         # Like
-        execute_db('INSERT INTO likes (pitch_id, user_id, created_at) VALUES (?, ?, ?)', 
+        execute_db('INSERT INTO likes (pitch_id, user_id, created_at) VALUES (?, ?, ?)',
                   [pitch_id, user_id, datetime.utcnow().isoformat()])
         liked = True
-    
+
+        # Create notification for pitch author (if not liking own pitch)
+        if pitch['author_id'] != user_id:
+            liker = query_db('SELECT username FROM users WHERE id = ?', [user_id], one=True)
+            if liker:
+                create_notification(
+                    user_id=pitch['author_id'],
+                    notification_type='like',
+                    title='New Like on Your Pitch',
+                    message=f"{liker['username']} liked your pitch '{pitch['title']}'",
+                    related_id=pitch_id,
+                    related_type='pitch'
+                )
+
     # Get updated like count
     like_count = query_db('SELECT COUNT(*) as count FROM likes WHERE pitch_id = ?', [pitch_id], one=True)['count']
-    
+
     return {'success': True, 'liked': liked, 'like_count': like_count}
 
 # Add comment
@@ -238,10 +310,28 @@ def add_comment(pitch_id):
     content = request.form.get('content', '').strip()
     if not content:
         return {'success': False, 'error': 'Comment cannot be empty'}, 400
-    
+
+    # Get pitch info to find the author
+    pitch = query_db('SELECT * FROM pitches WHERE id = ?', [pitch_id], one=True)
+    if not pitch:
+        return {'success': False, 'error': 'Pitch not found'}, 404
+
     execute_db('INSERT INTO comments (pitch_id, user_id, content, created_at) VALUES (?, ?, ?, ?)',
               [pitch_id, session['user_id'], content, datetime.utcnow().isoformat()])
-    
+
+    # Create notification for pitch author (if not commenting on own pitch)
+    if pitch['author_id'] != session['user_id']:
+        commenter = query_db('SELECT username FROM users WHERE id = ?', [session['user_id']], one=True)
+        if commenter:
+            create_notification(
+                user_id=pitch['author_id'],
+                notification_type='comment',
+                title='New Comment on Your Pitch',
+                message=f"{commenter['username']} commented on your pitch '{pitch['title']}'",
+                related_id=pitch_id,
+                related_type='pitch'
+            )
+
     flash('Comment added successfully!', 'success')
     return redirect(url_for('pitch', pitch_id=pitch_id))
 
@@ -296,6 +386,18 @@ def send_message(user_id):
                      VALUES (?, ?, ?, ?, ?)''',
                   [session['user_id'], user_id, subject, content, datetime.utcnow().isoformat()])
         
+        # Create notification for message receiver
+        sender = query_db('SELECT username FROM users WHERE id = ?', [session['user_id']], one=True)
+        if sender:
+            create_notification(
+                user_id=user_id,
+                notification_type='message',
+                title='New Message',
+                message=f"You have a new message from {sender['username']}",
+                related_id=session['user_id'],
+                related_type='user'
+            )
+
         flash('Message sent successfully!', 'success')
         return redirect(url_for('messages'))
     
@@ -309,6 +411,35 @@ def mark_read(message_id):
     if message and message['receiver_id'] == session['user_id']:
         execute_db('UPDATE messages SET is_read = 1 WHERE id = ?', [message_id])
     return {'success': True}
+
+# Notifications
+@app.route('/notifications')
+@login_required
+def notifications():
+    """View all notifications for the current user"""
+    user_notifications = get_user_notifications(session['user_id'])
+    return render_template('notifications.html', notifications=user_notifications)
+
+@app.route('/notifications/mark_read/<int:notification_id>', methods=['POST'])
+@login_required
+def mark_notification_read_route(notification_id):
+    """Mark a specific notification as read"""
+    mark_notification_read(notification_id, session['user_id'])
+    return redirect(url_for('notifications'))
+
+@app.route('/notifications/mark_all_read', methods=['POST'])
+@login_required
+def mark_all_notifications_read_route():
+    """Mark all notifications as read"""
+    mark_all_notifications_read(session['user_id'])
+    return redirect(url_for('notifications'))
+
+@app.route('/notifications/delete/<int:notification_id>', methods=['POST'])
+@login_required
+def delete_notification_route(notification_id):
+    """Delete a specific notification"""
+    delete_notification(notification_id, session['user_id'])
+    return redirect(url_for('notifications'))
 
 @app.route('/admin', methods=['GET','POST'])
 @role_required(['admin'])
@@ -367,5 +498,11 @@ if __name__ == '__main__':
     if not os.path.exists(DB_PATH):
         from init_db import init_db
         init_db(DB_PATH)
+    # Add notifications table if it doesn't exist (for existing databases)
+    try:
+        from add_notifications import add_notifications_table
+        add_notifications_table(DB_PATH)
+    except Exception as e:
+        print(f"Note: Could not add notifications table: {e}")
     threading.Thread(target=ping_self, daemon=True).start()
     app.run(host="0.0.0.0", port=5000)

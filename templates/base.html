@@ -41,8 +41,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link px-3" href="{{ url_for('post') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
-                <i class='bx bx-plus-circle me-1'></i>Post Idea
+              <a class="nav-link px-3 position-relative" href="{{ url_for('notifications') }}" style="font-weight: 600; color: #0D2B1D; transition: all 0.3s ease;">
+                <i class='bx bx-bell me-1'></i>Notifications
+                {% if notification_count is defined and notification_count > 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: #dc3545; font-size: 0.65rem; padding: 3px 6px;">
+                  {{ notification_count }}
+                </span>
+                {% endif %}
               </a>
             </li>
             <li class="nav-item">
@@ -104,6 +109,12 @@
                 </a></li>
                 <li><a class="dropdown-item" href="{{ url_for('post') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
                   <i class='bx bx-plus-circle me-2'></i>Post Idea
+                </a></li>
+                <li><a class="dropdown-item" href="{{ url_for('notifications') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
+                  <i class='bx bx-bell me-2'></i>Notifications
+                  {% if notification_count is defined and notification_count > 0 %}
+                  <span class="badge" style="background: #dc3545; color: white; font-size: 0.7rem; margin-left: 4px;">{{ notification_count }}</span>
+                  {% endif %}
                 </a></li>
                 <li><a class="dropdown-item" href="{{ url_for('messages') }}" style="border-radius: 8px; padding: 10px 16px; color: #0D2B1D; font-weight: 500; transition: all 0.2s ease;" onmouseover="this.style.background='#E3EFD3'" onmouseout="this.style.background='transparent'">
                   <i class='bx bx-envelope me-2'></i>Messages
